@@ -4,6 +4,7 @@
 .httr-oauth
 .DS_Store
 .quarto
-**/01. Data/
-**/02. Final Analytic Data Set/
-README.docx
+Data/
+Results/
+Output/
+Error/
