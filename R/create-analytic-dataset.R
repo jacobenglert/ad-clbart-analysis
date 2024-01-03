@@ -11,16 +11,16 @@ library(tidyverse)
 # Load Data ---------------------------------------------------------------
 
 # Location data (2015, US, Zip-code level)
-l_data <- sf::st_read(here::here('01. Data','Location Data','ESRI ZIP 2015/ESRI15USZIP5_POLY_WGS84.shp'))
+l_data <- sf::st_read(here::here('Data','Raw','Location Data','ESRI ZIP 2015/ESRI15USZIP5_POLY_WGS84.shp'))
 l_data_ca <- filter(l_data, STATE == 'CA') # 30,541 US ZIP codes --> 1,707 CA ZIP codes
 
 # Meteorology data (2005-2015, CA, Zip-code level)
-m_data <- read_rds(here::here('01. Data','Exposure Data','Daymet_CA.rda')) |>
+m_data <- read_rds(here::here('Data','Raw','Exposure Data','Daymet_CA.rda')) |>
   filter(year(DATE) %in% 2005:2015)
 max(table(m_data$ZCTA, m_data$DATE)) # No duplicate entries
 
 # ED visit data (2005-2015, CA)
-h_data <- haven::read_sas(here::here('01. Data','Health Data','ca.sas7bdat')) |>
+h_data <- haven::read_sas(here::here('Data','Raw','Health Data','ca.sas7bdat')) |>
   filter(AD == 1) # subset to only AD patients
 h_data[h_data == ""] <- NA
 
@@ -29,7 +29,7 @@ h_data[h_data == ""] <- NA
 h_data_ca <- h_data
 
 # Time data
-t_data <- haven::read_sas(here::here('01. Data','Time Data','time_93_20_short.sas7bdat')) |>
+t_data <- haven::read_sas(here::here('Data','Raw','Time Data','time_93_20_short.sas7bdat')) |>
   filter(year(DATE) %in% 2005:2015) |>
   select(DATE, HOLIDAY_FO)
 
@@ -95,4 +95,4 @@ cco <- h_data_ca |>
   select(ID, AGE:STROKE1, STATE, ZCTA, DATE, Case, Year:DoW, DoY, AVG:AT, AVG3DMA, DP3DMA, HW, HOLIDAY = HOLIDAY_FO)
 
 # Export
-write_csv(cco, here::here('02. Analytic Data Set Creation','02. Final Analytic Data Set','ad-ca-cco.csv'))
+write_csv(cco, here::here('Data','Clean','ad-ca-cco.csv'))
