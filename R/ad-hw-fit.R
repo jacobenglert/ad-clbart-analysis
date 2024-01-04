@@ -73,5 +73,5 @@ fit$sex <- sex
 # Output Results ----------------------------------------------------------
 message(paste0("SLURM_ARRAY_TASK_ID is : ", index))
 if(!dir.exists(here::here('Results','Heatwave','temp'))) dir.create(here::here('Results','Heatwave','temp'))
-write_rds(fit, here::here('Results','Heatwave','temp', paste0(sprintf("%04d", index), ".rds")))
+saveRDS(fit, here::here('Results','Heatwave','temp', paste0(sprintf("%04d", index), ".rds")))
 
