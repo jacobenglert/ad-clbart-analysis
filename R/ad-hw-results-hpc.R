@@ -15,8 +15,8 @@ source(here::here('R','mcmc-pdp.R'))
 
 # Specify Results and Output Directories ----------------------------------
 run_date <- '05JAN2024'
-res_dir <- here::here('Results','Heatwave', run_date)
-out_dir <- here::here('Tables','Heatwave', run_date, 'Data', 'temp')
+res_dir <- here::here('Results','Heatwave','temp')
+out_dir <- here::here('Tables','Heatwave','Data','temp')
 dir.create(out_dir, recursive = TRUE)
 
 

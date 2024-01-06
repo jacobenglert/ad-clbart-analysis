@@ -2,9 +2,8 @@
 
 library(tidyverse)
 
-run_date <- '05JAN2024'
-in_dir <- here::here('Tables','Heatwave', run_date, 'Data', 'temp')
-out_dir <- here::here('Tables','Heatwave', run_date, 'Data')
+in_dir <- here::here('Tables','Heatwave','Data', 'temp')
+out_dir <- here::here('Tables','Heatwave','Data')
 
 marg_files <- list.files(in_dir, full.names = TRUE)[str_starts(list.files(in_dir), 'marg')]
 cart_files <- list.files(in_dir, full.names = TRUE)[str_starts(list.files(in_dir), 'cart')]
