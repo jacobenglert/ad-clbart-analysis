@@ -11,3 +11,5 @@ Error/
 **/Legacy/
 Figures/
 Local/
+*.out
+*.err
