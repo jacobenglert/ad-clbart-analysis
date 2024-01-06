@@ -117,8 +117,8 @@ cart_R2 <- 1 - (sum((tau_data$tau - predict(tau_cart))^2) / sum((tau_data$tau - 
 
 # Compute pACLORs from CART summary
 var_list_cart <- na.omit(setdiff(names(tau_cart$variable.importance), 'AGE')[1:3])
-J <- sapply(var_list_cart, \(x) which(colnames(AD2) == x))
-cart_pACLOR <- mcmc_pdp(data = AD2, model = fit, J = J, K = 2)
+J <- sapply(var_list_cart, \(x) which(colnames(AD) == x))
+cart_pACLOR <- mcmc_pdp(data = AD, model = fit, J = J, K = 2)
 
 # Store CART summary results
 cart_post <- list(data = cart_pACLOR |>
