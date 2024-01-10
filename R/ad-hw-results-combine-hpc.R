@@ -2,8 +2,8 @@
 
 library(tidyverse)
 
-in_dir <- here::here('Tables','Heatwave','Data', 'temp')
-out_dir <- here::here('Tables','Heatwave','Data')
+in_dir <- here::here('Tables','Data', 'temp')
+out_dir <- here::here('Tables','Data')
 
 marg_files <- list.files(in_dir, full.names = TRUE)[str_starts(list.files(in_dir), 'marg')]
 cart_files <- list.files(in_dir, full.names = TRUE)[str_starts(list.files(in_dir), 'cart')]

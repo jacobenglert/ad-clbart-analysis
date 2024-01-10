@@ -14,9 +14,8 @@ source(here::here('R','mcmc-pdp.R'))
 
 
 # Specify Results and Output Directories ----------------------------------
-run_date <- '05JAN2024'
-res_dir <- here::here('Results','Heatwave','temp')
-out_dir <- here::here('Tables','Heatwave','Data','temp')
+res_dir <- here::here('Results','temp')
+out_dir <- here::here('Tables','Data','temp')
 dir.create(out_dir, recursive = TRUE)
 
 
@@ -111,7 +110,8 @@ marg_post <- marg_pACLOR |>
          alpha_rho = alpha_rho, beta_rho = beta_rho, num_trees = num_trees)
   
 # Obtain lower-dimension posterior summary with CART
-tau_data <- cbind(AD, tau = colMeans(tau))
+tau_data <- cbind(AD, tau = colMeans(tau)) |>
+  mutate(across(setdiff(colnames(AD), 'AGE'), \(x) factor(x, levels = 0:1, labels = c('N','Y'))))
 tau_cart <- rpart::rpart(tau ~ ., data = tau_data)
 cart_R2 <- 1 - (sum((tau_data$tau - predict(tau_cart))^2) / sum((tau_data$tau - mean(tau_data$tau))^2))
 
@@ -125,12 +125,15 @@ cart_post <- list(data = cart_pACLOR |>
                     mutate(race_eth_cat = race_eth_cat, sex = sex,
                            alpha_rho = alpha_rho, beta_rho = beta_rho, 
                            num_trees = num_trees, R2 = cart_R2), 
-                  var_list_cart = var_list_cart)
+                  var_list_cart = var_list_cart,
+                  cart_fit = rpart::rpart(tau ~ ., data = tau_data, 
+                                          control = rpart::rpart.control(maxdepth = 4)))
   
 # Store predictions
 pred_post <- tau_data |>
   mutate(race_eth_cat = race_eth_cat, sex = sex,
          alpha_rho = alpha_rho, beta_rho = beta_rho, num_trees = num_trees)
+
 
 
 # Output Results ----------------------------------------------------------
